@@ -19,23 +19,26 @@
 </head>
 
 <body data-ng-controller="AppCtrl">
-    <ion-header-bar class="bar bar-dark head">
-        <h1 class="title">IONIC DEMO APP</h1>
+ 
+    <ion-tabs class="tabs-striped tabs-positive tabs-icon-top">
+        <ion-tab title="Home" icon-on="ion-ios-filing" icon-off="ion-ios-filing-outline">
+           <ion-header-bar class="bar bar-dark head">
+        <h1 class="title">MOVIELICIOUS-IONIC DEMO APP</h1>
         <!-- data-ng bsically handler -->
-       <!--  <button class="button button-balanced" data-ng-click="refresh()">
+        <!--  <button class="button button-balanced" data-ng-click="refresh()">
             <i class="icon ion-refresh"></i>
         </button> -->
     </ion-header-bar>
-    <ion-content>
+          <ion-content>
         <form ng-submit="refresh(movie)">
-          <div class="item item-input-inset">
-            <label class="item-input-wrapper">
-              <input type="text" placeholder="Movie Name" ng-model="movie" > 
-            </label>
-            <button class="button button-small">
-              Submit
-            </button>
-          </div>
+            <div class="item item-input-inset">
+                <label class="item-input-wrapper">
+                    <input type="text" placeholder="Movie Name" ng-model="movie">
+                </label>
+                <button class="button button-small">
+                    Submit
+                </button>
+            </div>
         </form>
         <ion-refresher on-refresh="refresh(movie)"></ion-refresher>
         <div data-ng-show="!data.length">
@@ -48,12 +51,11 @@
         <div class="card list" data-ng-repeat="a in data">
             <div class="item item-avatar-left">
                 <img data-ng-src={{a.poster_path}} alt="">
-              
                 <h2>{{a.original_title}}</h2>
                 <p>{{a.release_date}}</p>
             </div>
-            <div class="item item-body" >
-             <!--  <img  data-ng-src={{a.poster_path}} class="full-image"> -->
+            <div class="item item-body">
+                <!--  <img  data-ng-src={{a.poster_path}} class="full-image"> -->
                 <p>Language: {{a.original_language}}</p>
                 <p>
                     {{a.overview}}
@@ -67,6 +69,23 @@
             </div>
         </div>
     </ion-content>
+        </ion-tab>
+
+        <ion-tab title="About" icon-on="ion-ios-clock" icon-off="ion-ios-clock-outline">
+              <ion-header-bar class="bar bar-dark head">
+        <h1 class="title">IONIC DEMO APP</h1>
+        <!-- data-ng bsically handler -->
+        <!--  <button class="button button-balanced" data-ng-click="refresh()">
+            <i class="icon ion-refresh"></i>
+        </button> -->
+    </ion-header-bar>
+        </ion-tab>
+
+        <ion-tab title="Settings" icon-on="ion-ios-gear" icon-off="ion-ios-gear-outline">
+            <!-- Tab 3 content -->
+        </ion-tab>
+    </ion-tabs>
+   
 </body>
 
 </html>
