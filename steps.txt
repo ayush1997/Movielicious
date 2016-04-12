@@ -1,0 +1,186 @@
+
+Next, we can find our unsigned APK file in platforms/android/build/outputs/apk. In our example, the file was platforms/android/build/outputs/apk/HelloWorld-release-unsigned.apk. Now, we need to sign the unsigned APK and run an alignment utility on it to optimize it and prepare it for the app store. If you already have a signing key, skip these steps and use that one instead.
+
+Let’s generate our private key using the keytool command that comes with the JDK. If this tool isn’t found, refer to the installation guide:
+
+$ keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
+You’ll first be prompted to create a password for the keystore. Then, answer the rest of the nice tools’s questions and when it’s all done, you should have a file called my-release-key.keystore created in the current directory.
+
+
+
+keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000 
+Enter keystore password:  
+Re-enter new password: 
+What is your first and last name?
+  [Unknown]:  Ayush Singh
+What is the name of your organizational unit?
+  [Unknown]:  ayush
+What is the name of your organization?
+  [Unknown]:  ayush
+What is the name of your City or Locality?
+  [Unknown]:  New Delhi
+What is the name of your State or Province?
+  [Unknown]:  Delhi
+What is the two-letter country code for this unit?
+  [Unknown]:  91
+Is CN=Ayush Singh, OU=ayush, O=ayush, L=New Delhi, ST=Delhi, C=91 correct?
+  [no]:  yes
+
+Generating 2,048 bit RSA key pair and self-signed certificate (SHA256withRSA) with a validity of 10,000 days
+  for: CN=Ayush Singh, OU=ayush, O=ayush, L=New Delhi, ST=Delhi, C=91
+Enter key password for <alias_name>
+  (RETURN if same as keystore password):  
+Key password is too short - must be at least 6 characters
+Enter key password for <alias_name>
+  (RETURN if same as keystore password):  
+Re-enter new password: 
+[Storing my-release-key.keystore]
+
+
+
+
+
+
+
+
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore android-release-unsigned.apk demo
+Enter Passphrase for keystore: 
+   adding: META-INF/MANIFEST.MF
+   adding: META-INF/DEMO.SF
+   adding: META-INF/DEMO.RSA
+  signing: AndroidManifest.xml
+  signing: assets/www/cordova-js-src/android/nativeapiprovider.js
+  signing: assets/www/cordova-js-src/android/promptbasednativeapi.js
+  signing: assets/www/cordova-js-src/exec.js
+  signing: assets/www/cordova-js-src/platform.js
+  signing: assets/www/cordova-js-src/plugin/android/app.js
+  signing: assets/www/cordova.js
+  signing: assets/www/cordova_plugins.js
+  signing: assets/www/css/style.css
+  signing: assets/www/img/ionic.png
+  signing: assets/www/index.html
+  signing: assets/www/js/app.js
+  signing: assets/www/lib/ionic/css/ionic.css
+  signing: assets/www/lib/ionic/css/ionic.min.css
+  signing: assets/www/lib/ionic/fonts/ionicons.eot
+  signing: assets/www/lib/ionic/fonts/ionicons.svg
+  signing: assets/www/lib/ionic/fonts/ionicons.ttf
+  signing: assets/www/lib/ionic/fonts/ionicons.woff
+  signing: assets/www/lib/ionic/js/angular-ui/angular-ui-router.js
+  signing: assets/www/lib/ionic/js/angular-ui/angular-ui-router.min.js
+  signing: assets/www/lib/ionic/js/angular/angular-animate.js
+  signing: assets/www/lib/ionic/js/angular/angular-animate.min.js
+  signing: assets/www/lib/ionic/js/angular/angular-resource.js
+  signing: assets/www/lib/ionic/js/angular/angular-resource.min.js
+  signing: assets/www/lib/ionic/js/angular/angular-sanitize.js
+  signing: assets/www/lib/ionic/js/angular/angular-sanitize.min.js
+  signing: assets/www/lib/ionic/js/angular/angular.js
+  signing: assets/www/lib/ionic/js/angular/angular.min.js
+  signing: assets/www/lib/ionic/js/ionic-angular.js
+  signing: assets/www/lib/ionic/js/ionic-angular.min.js
+  signing: assets/www/lib/ionic/js/ionic.bundle.js
+  signing: assets/www/lib/ionic/js/ionic.bundle.min.js
+  signing: assets/www/lib/ionic/js/ionic.js
+  signing: assets/www/lib/ionic/js/ionic.min.js
+  signing: assets/www/lib/ionic/scss/_action-sheet.scss
+  signing: assets/www/lib/ionic/scss/_animations.scss
+  signing: assets/www/lib/ionic/scss/_backdrop.scss
+  signing: assets/www/lib/ionic/scss/_badge.scss
+  signing: assets/www/lib/ionic/scss/_bar.scss
+  signing: assets/www/lib/ionic/scss/_button-bar.scss
+  signing: assets/www/lib/ionic/scss/_button.scss
+  signing: assets/www/lib/ionic/scss/_checkbox.scss
+  signing: assets/www/lib/ionic/scss/_form.scss
+  signing: assets/www/lib/ionic/scss/_grid.scss
+  signing: assets/www/lib/ionic/scss/_items.scss
+  signing: assets/www/lib/ionic/scss/_list.scss
+  signing: assets/www/lib/ionic/scss/_loading.scss
+  signing: assets/www/lib/ionic/scss/_menu.scss
+  signing: assets/www/lib/ionic/scss/_mixins.scss
+  signing: assets/www/lib/ionic/scss/_modal.scss
+  signing: assets/www/lib/ionic/scss/_platform.scss
+  signing: assets/www/lib/ionic/scss/_popover.scss
+  signing: assets/www/lib/ionic/scss/_popup.scss
+  signing: assets/www/lib/ionic/scss/_progress.scss
+  signing: assets/www/lib/ionic/scss/_radio.scss
+  signing: assets/www/lib/ionic/scss/_range.scss
+  signing: assets/www/lib/ionic/scss/_refresher.scss
+  signing: assets/www/lib/ionic/scss/_reset.scss
+  signing: assets/www/lib/ionic/scss/_scaffolding.scss
+  signing: assets/www/lib/ionic/scss/_select.scss
+  signing: assets/www/lib/ionic/scss/_slide-box.scss
+  signing: assets/www/lib/ionic/scss/_slides.scss
+  signing: assets/www/lib/ionic/scss/_spinner.scss
+  signing: assets/www/lib/ionic/scss/_tabs.scss
+  signing: assets/www/lib/ionic/scss/_toggle.scss
+  signing: assets/www/lib/ionic/scss/_transitions.scss
+  signing: assets/www/lib/ionic/scss/_type.scss
+  signing: assets/www/lib/ionic/scss/_util.scss
+  signing: assets/www/lib/ionic/scss/_variables.scss
+  signing: assets/www/lib/ionic/scss/ionic.scss
+  signing: assets/www/lib/ionic/scss/ionicons/_ionicons-font.scss
+  signing: assets/www/lib/ionic/scss/ionicons/_ionicons-icons.scss
+  signing: assets/www/lib/ionic/scss/ionicons/_ionicons-variables.scss
+  signing: assets/www/lib/ionic/scss/ionicons/ionicons.scss
+  signing: assets/www/lib/ionic/version.json
+  signing: assets/www/plugins/cordova-plugin-device/www/device.js
+  signing: assets/www/plugins/cordova-plugin-splashscreen/www/splashscreen.js
+  signing: assets/www/plugins/cordova-plugin-statusbar/www/statusbar.js
+  signing: assets/www/plugins/cordova-plugin-whitelist/whitelist.js
+  signing: assets/www/plugins/ionic-plugin-keyboard/www/android/keyboard.js
+  signing: res/drawable-hdpi-v4/icon.png
+  signing: res/drawable-land-hdpi-v4/screen.png
+  signing: res/drawable-land-ldpi-v4/screen.png
+  signing: res/drawable-land-mdpi-v4/screen.png
+  signing: res/drawable-land-xhdpi-v4/screen.png
+  signing: res/drawable-land-xxhdpi-v4/screen.png
+  signing: res/drawable-land-xxxhdpi-v4/screen.png
+  signing: res/drawable-ldpi-v4/icon.png
+  signing: res/drawable-mdpi-v4/icon.png
+  signing: res/drawable-port-hdpi-v4/screen.png
+  signing: res/drawable-port-ldpi-v4/screen.png
+  signing: res/drawable-port-mdpi-v4/screen.png
+  signing: res/drawable-port-xhdpi-v4/screen.png
+  signing: res/drawable-port-xxhdpi-v4/screen.png
+  signing: res/drawable-port-xxxhdpi-v4/screen.png
+  signing: res/drawable-xhdpi-v4/icon.png
+  signing: res/drawable-xxhdpi-v4/icon.png
+  signing: res/drawable-xxxhdpi-v4/icon.png
+  signing: res/xml/config.xml
+  signing: resources.arsc
+  signing: classes.dex
+jar signed.
+
+Warning: 
+No -tsa or -tsacert is provided and this jar is not timestamped. Without a timestamp, users may not be able to validate this jar after the signer certificate's expiration date (2043-08-16) or after any future revocation date.
+
+
+ keytool -exportcert -list -v \
+-alias demo -keystore my-release-key.keystore
+Enter keystore password:  
+Alias name: demo
+Creation date: 30 Mar, 2016
+Entry type: PrivateKeyEntry
+Certificate chain length: 1
+Certificate[1]:
+Owner: CN=Ayush, OU=Ayush, O=Ayush, L=New Delhi, ST=Dlehi, C=91
+Issuer: CN=Ayush, OU=Ayush, O=Ayush, L=New Delhi, ST=Dlehi, C=91
+Serial number: 50521e70
+Valid from: Wed Mar 30 22:14:49 IST 2016 until: Sun Aug 16 22:14:49 IST 2043
+Certificate fingerprints:
+   MD5:  48:45:16:F1:FE:66:01:7D:21:6B:C0:CB:11:E6:8E:2E
+   SHA1: 7E:94:E5:F9:7A:10:BF:1A:C4:AD:5A:90:09:C2:01:CD:E8:50:D1:27
+   SHA256: 1C:EE:36:66:31:33:85:25:F3:5F:C6:78:BD:DD:69:D2:1C:0B:BA:D9:FA:C6:DA:76:DF:90:D6:34:E6:A2:6E:31
+   Signature algorithm name: SHA256withRSA
+   Version: 3
+
+Extensions: 
+
+#1: ObjectId: 2.5.29.14 Criticality=false
+SubjectKeyIdentifier [
+KeyIdentifier [
+0000: 05 18 F4 99 BA 7E 51 29   2E D0 7F A1 89 0E 7B 74  ......Q).......t
+0010: 20 DA 38 9B                                         .8.
+]
+]
